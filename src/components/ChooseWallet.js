@@ -66,34 +66,34 @@ const ChooseWallet = () => {
   return (
     <div className="Choose-wallet">
       <div className="Add-wallet">
+        {walletAddress && (
+          <div
+            onClick={() => {
+              updateAccordion(() => true);
+            }}
+            style={{
+              backgroundColor: "#0d3fa5",
+            }}
+          >
+            {getShortWalletAddress(walletAddress)} ▽
+          </div>
+        )}
+
         {accordion &&
           walletPublicKeys.map((item, index) => {
-            return (
+            return walletAddress !== item ? (
               <div
                 key={index}
                 onClick={() => {
                   onSelectWalletItem(item);
                 }}
-                style={{
-                  backgroundColor: walletAddress === item ? "#0d3fa5" : "",
-                }}
               >
                 {getShortWalletAddress(item)}
               </div>
-            );
+            ) : null;
           })}
 
         {(accordion || !walletAddress) && <AddWallet />}
-
-        {walletAddress && !accordion && (
-          <div
-            onClick={() => {
-              updateAccordion(() => true);
-            }}
-          >
-            {getShortWalletAddress(walletAddress)}
-          </div>
-        )}
       </div>
     </div>
   );

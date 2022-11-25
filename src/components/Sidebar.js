@@ -19,12 +19,22 @@ const Sidebar = () => {
             <div
               className={
                 pathname === "/" &&
-                (state?.chainId === item.chainId || (state === null && index === 0))
+                (state?.chainId === item.chainId ||
+                  (state === null && index === 0))
                   ? "item item-active"
                   : "item"
               }
               onClick={() => {
-                navigation("/", { state: { chainId: item.chainId, rpc: item.rpc, symbol: item.symbol } });
+                navigation("/", {
+                  state: {
+                    index: index,
+                    chainId: item.chainId,
+                    rpc: item.rpc,
+                    symbol: item.symbol,
+                    name: item.name,
+                    explorerUrl: item.explorerUrl,
+                  },
+                });
               }}
               key={index}
             >
