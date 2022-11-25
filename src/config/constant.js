@@ -18,6 +18,6 @@ export const BINANCE_TEST_NET = {
   name: "BNB Test Net",
   rpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
   chainId: "97",
-  symbol: "BNB",
+  symbol: "tBNB",
   explorerUrl: "https://testnet.bscscan.com",
 };
