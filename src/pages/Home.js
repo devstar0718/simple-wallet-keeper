@@ -78,7 +78,7 @@ const Home = () => {
     setChainId(curChainId);
     setSymbol(curSymbol);
     setExplorerUrl(curExplorerUrl);
-  }, [curIndex]);
+  }, [curName, curRpc, curChainId, curSymbol, curExplorerUrl]);
 
   return (
     <div className="content add-network">
