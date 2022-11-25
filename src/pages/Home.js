@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getWeb3 } from "../lib/wallet";
-import { BINACNE_TEST_NET, WALLET_ADDRESS } from "../config/constant";
+import { BINANCE_TEST_NET, WALLET_ADDRESS } from "../config/constant";
 import Web3 from "web3";
 
 import store from "../config/store";
@@ -11,8 +11,8 @@ const Home = () => {
 
   const location = useLocation();
   const state = location.state;
-  const rpcUrl = state?.rpc ? state.rpc : BINACNE_TEST_NET.rpc;
-  const symbol = state?.symbol ? state.symbol : BINACNE_TEST_NET.symbol;
+  const rpcUrl = state?.rpc ? state.rpc : BINANCE_TEST_NET.rpc;
+  const symbol = state?.symbol ? state.symbol : BINANCE_TEST_NET.symbol;
 
   const [walletAddress] = store.useState(WALLET_ADDRESS);
 

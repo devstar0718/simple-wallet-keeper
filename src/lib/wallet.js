@@ -14,7 +14,7 @@ import {
   STORE_WALLET_PUBLIC_KEY,
   STORE_WALLET_PRIVATE_KEY,
   STORE_CHAIN,
-  BINACNE_TEST_NET,
+  BINANCE_TEST_NET,
 } from "../config/constant";
 
 /**
@@ -41,7 +41,7 @@ const generateWallet = (web3) => {
 
 /**
  * @return wallet array
- * @dev get wallet list from localstorage
+ * @dev get wallet list from local storage
  **/
 const getWallets = () => {
   const wallets = readLocalStorageByKey(STORE_WALLET_PUBLIC_KEY);
@@ -54,7 +54,7 @@ const getWallets = () => {
 /**
  * @param wallets wallet list
  * @return bool
- * @dev save wallet list in localstorage
+ * @dev save wallet list in local storage
  */
 const setWallets = (wallets) => {
   return setLocalStorage(STORE_WALLET_PUBLIC_KEY, JSON.stringify(wallets));
@@ -63,7 +63,7 @@ const setWallets = (wallets) => {
 /**
  * @param pass wallet password
  * @return private key list
- * @dev get private keys list from localstorage
+ * @dev get private keys list from local storage
  **/
 const getWalletPrivateKeys = (pass) => {
   const privateKeys = readSecureLocalStorageByKey(
@@ -80,7 +80,7 @@ const getWalletPrivateKeys = (pass) => {
  * @param pass password
  * @param privateKeys private keys list
  * @return bool
- * @dev save privateKeys in localstorage
+ * @dev save privateKeys in local storage
  **/
 const setWalletPrivateKeys = (pass, privateKeys) => {
   let _prev = getWalletPrivateKeys(pass);
@@ -96,8 +96,8 @@ const getChainList = () => {
   if (Array.isArray(chainList)) {
     return chainList;
   } else {
-    setLocalStorage(STORE_CHAIN, JSON.stringify([BINACNE_TEST_NET]));
-    return [BINACNE_TEST_NET];
+    setLocalStorage(STORE_CHAIN, JSON.stringify([BINANCE_TEST_NET]));
+    return [BINANCE_TEST_NET];
   }
 };
 

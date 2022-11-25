@@ -1,6 +1,6 @@
 import React from "react";
 import ChooseWallet from "./ChooseWallet";
-import ExportPriateKey from "./ExportPrivateKey";
+import ExportPrivateKey from "./ExportPrivateKey";
 import RemoveNetwork from "./RemoveNetwork";
 import { WALLET_ADDRESS } from "../config/constant";
 import store from "../config/store";
@@ -11,7 +11,7 @@ const Header = () => {
     <header className="App-header">
       <h1>Simple Wallet Keeper</h1>
       <ChooseWallet />
-      {walletAddress && <ExportPriateKey />}
+      {walletAddress && <ExportPrivateKey />}
       <RemoveNetwork />
     </header>
   );

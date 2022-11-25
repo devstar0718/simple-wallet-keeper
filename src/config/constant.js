@@ -14,7 +14,7 @@ export const SHOW_WALLET_LIST = "SHOW_WALLET_LIST";
 
 export const WALLET_PASSWORD = "123";
 
-export const BINACNE_TEST_NET = {
+export const BINANCE_TEST_NET = {
   name: "BNB Test Net",
   rpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
   chainId: "97",

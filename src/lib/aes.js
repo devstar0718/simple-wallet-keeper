@@ -31,21 +31,21 @@ const aesEncrypt = (pass, text) => {
 
 /**
  * @param pass aes encryption key
- * @param ciphertext cipher text
+ * @param cipher_text cipher text
  *
  * @return null | decrypted data
  **/
-const aesDecrypt = (pass, ciphertext) => {
+const aesDecrypt = (pass, cipher_text) => {
   if (
     !pass ||
     typeof pass !== "string" ||
-    !ciphertext ||
-    typeof ciphertext !== "string"
+    !cipher_text ||
+    typeof cipher_text !== "string"
   ) {
     return null;
   }
 
-  let bytes = CryptoJS.AES.decrypt(ciphertext, pass);
+  let bytes = CryptoJS.AES.decrypt(cipher_text, pass);
   try {
     bytes = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } catch (e) {

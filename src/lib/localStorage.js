@@ -6,8 +6,8 @@
 import { aesEncrypt, aesDecrypt } from "./aes";
 
 /**
- * @param key localstorage key
- * @return localstorage vlue
+ * @param key local storage key
+ * @return local storage value
  **/
 const readLocalStorageByKey = (key) => {
   if (!key) return null;
@@ -23,7 +23,7 @@ const readLocalStorageByKey = (key) => {
 };
 
 /**
- * @param key localstorage key
+ * @param key local storage key
  * @return  true | false
  **/
 const setLocalStorage = (key, str) => {
@@ -35,7 +35,7 @@ const setLocalStorage = (key, str) => {
 
 /**
  * @param pass password
- * @param key localstorage key
+ * @param key local storage key
  * @return null | decrypted data
  **/
 const readSecureLocalStorageByKey = (pass, key) => {
@@ -49,7 +49,7 @@ const readSecureLocalStorageByKey = (pass, key) => {
 
 /**
  * @param pass password
- * @param key localstorage key
+ * @param key local storage key
  * @return true | false
  **/
 const setSecureLocalStorage = (pass, key, data) => {
@@ -63,8 +63,8 @@ const setSecureLocalStorage = (pass, key, data) => {
     return false;
   }
 
-  const chipherText = aesEncrypt(pass, JSON.stringify(data));
-  localStorage.setItem(key, chipherText);
+  const cipherText = aesEncrypt(pass, JSON.stringify(data));
+  localStorage.setItem(key, cipherText);
 
   return true;
 };

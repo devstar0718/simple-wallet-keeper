@@ -4,7 +4,7 @@ import { STORE_WALLET_PUBLIC_KEY, WALLET_ADDRESS } from "../config/constant";
 import store from "../config/store";
 import { toast } from "react-toast";
 
-const ExportPriateKey = () => {
+const ExportPrivateKey = () => {
   const [walletAddress] = store.useState(WALLET_ADDRESS);
   const [walletPublicKeys] = store.useState(STORE_WALLET_PUBLIC_KEY);
 
@@ -14,16 +14,16 @@ const ExportPriateKey = () => {
     const _index = walletPublicKeys.indexOf(walletAddress);
     const _priKey = privateKeys[_index];
     if (!_priKey) {
-      return toast.error("Error occured");
+      return toast.error("Error occurred");
     }
     alert(_priKey);
   };
 
   return (
     <div onClick={getWalletPrivateKey} className="Func-Button">
-      Export Previate Key
+      Export Private Key
     </div>
   );
 };
 
-export default ExportPriateKey;
+export default ExportPrivateKey;

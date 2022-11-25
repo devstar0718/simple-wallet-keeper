@@ -22,7 +22,7 @@ const AddNetwork = () => {
 
   const saveNetwork = () => {
     if (!name || !rpc || !chainId || !symbol) {
-      return toast.error("Please input all fieldas");
+      return toast.error("Please input all fields");
     }
 
     updateChainList((prev) => {

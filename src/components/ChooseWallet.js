@@ -8,7 +8,7 @@ import {
   setWalletPrivateKeys,
 } from "../lib/wallet";
 import {
-  BINACNE_TEST_NET,
+  BINANCE_TEST_NET,
   STORE_WALLET_PUBLIC_KEY,
   WALLET_PASSWORD,
   WALLET_ADDRESS,
@@ -20,9 +20,9 @@ import { SHOW_WALLET_LIST } from "../config/constant";
 const ChooseWallet = () => {
   const [accordion, updateAccordion] = store.useState(SHOW_WALLET_LIST);
 
-  const loacation = useLocation();
-  const state = loacation.state;
-  const rpc = state?.rpc ? state.rpc : BINACNE_TEST_NET.rpc;
+  const location = useLocation();
+  const state = location.state;
+  const rpc = state?.rpc ? state.rpc : BINANCE_TEST_NET.rpc;
 
   const [walletPublicKeys, updatePublicKeys] = store.useState(
     STORE_WALLET_PUBLIC_KEY
@@ -47,7 +47,7 @@ const ChooseWallet = () => {
   const onSelectWalletItem = (item) => {
     updateWalletAddress(() => item);
     updateAccordion(() => false);
-    if (walletAddress !== item) toast.success("Choosed a new wallet");
+    if (walletAddress !== item) toast.success("Chosen a new wallet");
   };
 
   const AddWallet = () => {

@@ -14,11 +14,11 @@ import {
 import { getWallets, getChainList } from "../lib/wallet";
 
 const store = createStore();
-const walets = getWallets();
-store.setState(STORE_WALLET_PUBLIC_KEY, walets);
+const wallets = getWallets();
+store.setState(STORE_WALLET_PUBLIC_KEY, wallets);
 store.setState(STORE_WALLET_PRIVATE_KEY, []);
 store.setState(STORE_CHAIN, getChainList());
-store.setState(WALLET_ADDRESS, walets[0]);
+store.setState(WALLET_ADDRESS, wallets[0]);
 store.setState(SHOW_WALLET_LIST, false);
 
 export default store;
