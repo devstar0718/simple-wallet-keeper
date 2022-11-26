@@ -6,16 +6,18 @@ import {
   getWeb3,
   setWallets,
   setWalletPrivateKeys,
+  setPasswordHash,
+  getPasswordHash,
 } from "../lib/wallet";
 import {
   BINANCE_TEST_NET,
   STORE_WALLET_PUBLIC_KEY,
-  WALLET_PASSWORD,
   WALLET_ADDRESS,
 } from "../config/constant";
 import store from "../config/store";
 import { getShortWalletAddress } from "../utils/index";
 import { SHOW_WALLET_LIST } from "../config/constant";
+import { hash } from "../lib/aes";
 
 const ChooseWallet = () => {
   const [accordion, updateAccordion] = store.useState(SHOW_WALLET_LIST);
@@ -30,6 +32,26 @@ const ChooseWallet = () => {
   const [walletAddress, updateWalletAddress] = store.useState(WALLET_ADDRESS);
 
   const addWallet = () => {
+    let _currentPassword = null;
+    const _walletPasswordHash = getPasswordHash();
+    if (!_walletPasswordHash) {
+      const _password = prompt("Please input your wallet password");
+      if (_password.length < 6) {
+        return toast.error("Password should be greater than 6 characters");
+      }
+      const _confirmPassword = prompt("Confirm password");
+      if (_password !== _confirmPassword) {
+        return toast.error("Password confirmation error");
+      }
+      _currentPassword = _password;
+      setPasswordHash(_password);
+    } else {
+      _currentPassword = prompt("Please input your password");
+      const _newHash = hash(_currentPassword).toString();
+      if (_newHash !== _walletPasswordHash) {
+        return toast.error("Invalid password");
+      }
+    }
     const web3 = getWeb3(rpc);
     const wallet = generateWallet(web3);
     updatePublicKeys((prev) => {
@@ -38,7 +60,7 @@ const ChooseWallet = () => {
       setWallets(prev);
       return prev;
     });
-    setWalletPrivateKeys(WALLET_PASSWORD, wallet.privateKey);
+    setWalletPrivateKeys(_currentPassword, wallet.privateKey);
     updateWalletAddress(() => wallet.address);
     updateAccordion(() => false);
     toast.success("Created a new wallet");

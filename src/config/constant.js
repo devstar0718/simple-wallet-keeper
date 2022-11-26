@@ -7,12 +7,11 @@
 export const STORE_WALLET_PUBLIC_KEY = "STORE_WALLET_PUBLIC_KEY";
 export const STORE_WALLET_PRIVATE_KEY = "STORE_WALLET_PRIVATE_KEY";
 export const STORE_CHAIN = "STORE_CHAIN";
+export const STORE_WALLET_PASSWORD = "STORE_WALLET_PASSWORD";
 //===============LOCAL STORAGE END===============
 
 export const WALLET_ADDRESS = "WALLET_ADDRESS";
 export const SHOW_WALLET_LIST = "SHOW_WALLET_LIST";
-
-export const WALLET_PASSWORD = "123";
 
 export const BINANCE_TEST_NET = {
   name: "BNB Test Net",
