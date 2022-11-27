@@ -39,7 +39,7 @@ const AddNetwork = () => {
 
     initialize();
 
-    toast.success("Added a new network")
+    toast.success("Added a new network");
   };
 
   return (
@@ -52,6 +52,7 @@ const AddNetwork = () => {
           onChange={(e) => {
             setName(e.target.value);
           }}
+          data-testid="name"
         />
 
         <label>New RPC URL</label>
@@ -61,6 +62,7 @@ const AddNetwork = () => {
           onChange={(e) => {
             setRpc(e.target.value);
           }}
+          data-testid="rpc"
         />
 
         <label>Chain ID</label>
@@ -70,6 +72,7 @@ const AddNetwork = () => {
           onChange={(e) => {
             setChainId(e.target.value);
           }}
+          data-testid="chainId"
         />
         <label>Currency symbol</label>
         <input
@@ -78,6 +81,7 @@ const AddNetwork = () => {
           onChange={(e) => {
             setSymbol(e.target.value);
           }}
+          data-testid="symbol"
         />
 
         <label>Block explorer URL (Optional)</label>
@@ -87,6 +91,7 @@ const AddNetwork = () => {
           onChange={(e) => {
             setExplorerUrl(e.target.value);
           }}
+          data-testid="explorerUrl"
         />
 
         <button onClick={saveNetwork}>+ Add</button>
