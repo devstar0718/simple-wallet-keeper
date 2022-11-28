@@ -102,6 +102,10 @@ const getWalletPrivateKeys = (pass) => {
 const setWalletPrivateKeys = (pass, privateKeys) => {
   let _prev = getWalletPrivateKeys(pass);
   _prev = _prev.concat(privateKeys);
+  const _wallets = getWallets();
+  if (_prev.length !== _wallets.length + 1) {
+    return false;
+  }
   return setSecureLocalStorage(pass, STORE_WALLET_PRIVATE_KEY, _prev);
 };
 

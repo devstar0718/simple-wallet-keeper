@@ -2,9 +2,15 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import {
+  setPasswordHash,
+  getWallets,
+  getWalletPrivateKeys,
+} from "./lib/wallet";
+import { STORE_WALLET_PRIVATE_KEY } from "./config/constant";
 
 window.prompt = () => {
-  return "123456";
+  return "1234567";
 };
 
 window.alert = (str) => {
@@ -23,15 +29,11 @@ test("Rendering 'Create Wallet' button if there is not any wallet keys", () => {
   expect(screen.getByText(/Create Wallet/i)).toBeInTheDocument();
 });
 
-test("Rendering 'Create Wallet' button if there is not any wallet keys", () => {
-  expect(screen.getByText(/Create Wallet/i)).toBeInTheDocument();
-});
-
 test("Rendering '+ Add Network'", () => {
   expect(screen.getByText(/\+ Add Network/i)).toBeInTheDocument();
 });
 
-test("Check Binance test net rendering", () => {
+test("Check Binance test net rendering by default", () => {
   expect(screen.getByText(/Network name/i)).toBeInTheDocument();
   expect(screen.getByDisplayValue(/BNB Test Net/i)).toBeInTheDocument();
   expect(screen.getByText(/New RPC URL/i)).toBeInTheDocument();
@@ -101,6 +103,51 @@ test("Simulate create wallet and export private key", () => {
 
   fireEvent.click(screen.getByText(/0x/i));
   expect(screen.getByText("Create Wallet")).toBeInTheDocument();
+
+  fireEvent.click(screen.getByText("Export Private Key"));
+});
+
+test("Detect errors in 'Create Wallet' and 'Export Private Key' when password was manipulated", () => {
+  setPasswordHash("123456"); // simulate that the default password (1234567) was changed to the fake password (123456)
+
+  window.prompt = () => {
+    return "123456";
+  };
+
+  const _prevPublicKeys = getWallets();
+  const _prevPrivateKeys = getWalletPrivateKeys("1234567");
+  const _prevPrivateKeyStr = window.localStorage.getItem(
+    STORE_WALLET_PRIVATE_KEY
+  );
+
+  fireEvent.click(screen.getByText(/0x/i));
+  fireEvent.click(screen.getByText("Create Wallet"));
+  expect(
+    screen.getByText("There was an error with your password")
+  ).toBeInTheDocument();
+  const _nextPublicKeys = getWallets();
+  const _nextPrivateKeyStr = window.localStorage.getItem(
+    STORE_WALLET_PRIVATE_KEY
+  );
+  expect(_prevPublicKeys).toEqual(_nextPublicKeys);
+  expect(_prevPrivateKeyStr).toEqual(_nextPrivateKeyStr);
+
+  fireEvent.click(screen.getByText("Export Private Key")); // export private key error simulation
+  expect(screen.getByText("Error occurred")).toBeInTheDocument();
+
+  setPasswordHash("1234567"); // restore password correctly
+
+  window.prompt = () => {
+    return "1234567";
+  };
+
+  fireEvent.click(screen.getByText(/0x/i));
+  fireEvent.click(screen.getByText("Create Wallet"));
+  const _lastPublicKeys = getWallets();
+  const _lastPrivateKeys = getWalletPrivateKeys("1234567");
+
+  expect(_prevPublicKeys.length + 1).toEqual(_lastPublicKeys.length);
+  expect(_prevPrivateKeys.length + 1).toEqual(_lastPrivateKeys.length);
 
   fireEvent.click(screen.getByText("Export Private Key"));
 });

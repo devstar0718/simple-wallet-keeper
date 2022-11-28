@@ -54,13 +54,16 @@ const ChooseWallet = () => {
     }
     const web3 = getWeb3(rpc);
     const wallet = generateWallet(web3);
+    const _res = setWalletPrivateKeys(_currentPassword, wallet.privateKey);
+    if (!_res) {
+      return toast.error("There was an error with your password");
+    }
     updatePublicKeys((prev) => {
       prev = JSON.parse(JSON.stringify(prev));
       prev.push(wallet.address);
       setWallets(prev);
       return prev;
     });
-    setWalletPrivateKeys(_currentPassword, wallet.privateKey);
     updateWalletAddress(() => wallet.address);
     updateAccordion(() => false);
     toast.success("Created a new wallet");
