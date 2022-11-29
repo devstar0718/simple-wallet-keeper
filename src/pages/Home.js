@@ -88,6 +88,7 @@ const Home = () => {
         <input
           type={"text"}
           value={name}
+          data-testid="name"
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -97,6 +98,7 @@ const Home = () => {
         <input
           type={"text"}
           value={rpc}
+          data-testid="rpc"
           onChange={(e) => {
             setRpc(e.target.value);
           }}
@@ -106,6 +108,7 @@ const Home = () => {
         <input
           type={"text"}
           value={chainId}
+          data-testid="chainId"
           onChange={(e) => {
             setChainId(e.target.value);
           }}
@@ -114,6 +117,7 @@ const Home = () => {
         <input
           type={"text"}
           value={symbol}
+          data-testid="symbol"
           onChange={(e) => {
             setSymbol(e.target.value);
           }}
@@ -123,6 +127,7 @@ const Home = () => {
         <input
           type={"text"}
           value={explorerUrl}
+          data-testid="explorerUrl"
           onChange={(e) => {
             setExplorerUrl(e.target.value);
           }}

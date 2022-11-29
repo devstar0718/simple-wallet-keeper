@@ -2,152 +2,200 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import {
-  setPasswordHash,
-  getWallets,
-  getWalletPrivateKeys,
-} from "./lib/wallet";
-import { STORE_WALLET_PRIVATE_KEY } from "./config/constant";
+import { getWallets, getWalletPrivateKeys, getChainList } from "./lib/wallet";
 
 window.prompt = () => {
-  return "1234567";
+  return "123456";
 };
 
 window.alert = (str) => {
   return str;
 };
 
-beforeEach(() => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-});
+const testNetwork = {
+  name: "Test script network",
+  rpc: "Test script rpc",
+  chainId: "Test script chainId",
+  symbol: "Test script symbol",
+  explorerUrl: "Test script explorerUrl",
+};
 
-test("Rendering 'Create Wallet' button if there is not any wallet keys", () => {
-  expect(screen.getByText(/Create Wallet/i)).toBeInTheDocument();
-});
-
-test("Rendering '+ Add Network'", () => {
-  expect(screen.getByText(/\+ Add Network/i)).toBeInTheDocument();
-});
-
-test("Check Binance test net rendering by default", () => {
-  expect(screen.getByText(/Network name/i)).toBeInTheDocument();
-  expect(screen.getByDisplayValue(/BNB Test Net/i)).toBeInTheDocument();
-  expect(screen.getByText(/New RPC URL/i)).toBeInTheDocument();
-  expect(
-    screen.getByDisplayValue(
-      /https:\/\/data-seed-prebsc-1-s1.binance.org:8545\//i
-    )
-  ).toBeInTheDocument();
-  expect(screen.getByText(/Chain ID/i)).toBeInTheDocument();
-  expect(screen.getByDisplayValue(/97/i)).toBeInTheDocument();
-  expect(screen.getByText(/Currency symbol/i)).toBeInTheDocument();
-  expect(screen.getByDisplayValue(/tBNB/i)).toBeInTheDocument();
-  expect(
-    screen.getByText(/Block explorer URL \(Optional\)/i)
-  ).toBeInTheDocument();
-  expect(
-    screen.getByDisplayValue(/https:\/\/testnet.bscscan.com/i)
-  ).toBeInTheDocument();
-  expect(screen.getByText("Update")).toBeInTheDocument();
-  expect(screen.getByText("Remove Network")).toBeInTheDocument();
-});
-
-test("Simulate add and remove network", () => {
-  fireEvent.click(screen.getByText("+ Add Network"));
-  expect(screen.getByText(/Network name/i)).toBeInTheDocument();
-  expect(screen.getByText(/New RPC URL/i)).toBeInTheDocument();
-  expect(screen.getByText(/Chain ID/i)).toBeInTheDocument();
-  expect(screen.getByText(/Currency symbol/i)).toBeInTheDocument();
-  expect(
-    screen.getByText(/Block explorer URL \(Optional\)/i)
-  ).toBeInTheDocument();
-  expect(screen.getByText("+ Add")).toBeInTheDocument();
-  fireEvent.change(screen.getByTestId("name"), {
-    target: { value: "Test script network" },
+describe("Rendering test case", () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
   });
-  fireEvent.change(screen.getByTestId("rpc"), {
-    target: { value: "Test script rpc" },
-  });
-  fireEvent.change(screen.getByTestId("chainId"), {
-    target: { value: "Test script chainId" },
-  });
-  fireEvent.change(screen.getByTestId("symbol"), {
-    target: { value: "Test script symbol" },
-  });
-  fireEvent.change(screen.getByTestId("explorerUrl"), {
-    target: { value: "Test script explorerUrl" },
-  });
-  fireEvent.click(screen.getByText("+ Add"));
-  expect(screen.getByText("Test script network")).toBeInTheDocument();
-  fireEvent.click(screen.getByText("+ Add Network"));
 
-  expect(screen.getByText("Added a new network"));
+  test("Rendering 'Create Wallet' button if there is not any wallet keys", () => {
+    expect(screen.getByText(/Create Wallet/i)).toBeInTheDocument();
+  });
 
-  expect(screen.getByText("Test script network")).toBeInTheDocument();
-  fireEvent.click(screen.getByText("Test script network"));
-  fireEvent.click(screen.getByText("Remove Network"));
+  test("Rendering '+ Add Network'", () => {
+    expect(screen.getByText(/\+ Add Network/i)).toBeInTheDocument();
+  });
 
-  expect(screen.getByText("Deleted a network"));
+  test("Rendering Binance test net rendering by default", () => {
+    expect(screen.getByText(/Network name/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/BNB Test Net/i)).toBeInTheDocument();
+    expect(screen.getByText(/New RPC URL/i)).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue(
+        /https:\/\/data-seed-prebsc-1-s1.binance.org:8545\//i
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Chain ID/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/97/i)).toBeInTheDocument();
+    expect(screen.getByText(/Currency symbol/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/tBNB/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Block explorer URL \(Optional\)/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue(/https:\/\/testnet.bscscan.com/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText("Update")).toBeInTheDocument();
+    expect(screen.getByText("Remove Network")).toBeInTheDocument();
+  });
+
+  test("Rendering add network page", () => {
+    fireEvent.click(screen.getByText("+ Add Network"));
+    expect(screen.getByText(/Network name/i)).toBeInTheDocument();
+    expect(screen.getByText(/New RPC URL/i)).toBeInTheDocument();
+    expect(screen.getByText(/Chain ID/i)).toBeInTheDocument();
+    expect(screen.getByText(/Currency symbol/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Block explorer URL \(Optional\)/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText("+ Add")).toBeInTheDocument();
+  });
 });
 
-test("Simulate create wallet and export private key", () => {
-  fireEvent.click(screen.getByText("Create Wallet"));
+describe("Simulate CRUD of network", () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+  });
 
-  expect(screen.getByText("Created a new wallet")).toBeInTheDocument();
-  expect(screen.getByText("Export Private Key")).toBeInTheDocument();
-  expect(screen.getByText(/0x/i)).toBeInTheDocument();
+  test("Create a new network (checked all input fields and show toast)", () => {
+    fireEvent.click(screen.getByText("+ Add Network"));
 
-  fireEvent.click(screen.getByText(/0x/i));
-  expect(screen.getByText("Create Wallet")).toBeInTheDocument();
+    fireEvent.change(screen.getByTestId("name"), {
+      target: { value: testNetwork.name },
+    });
+    fireEvent.change(screen.getByTestId("rpc"), {
+      target: { value: testNetwork.rpc },
+    });
+    fireEvent.change(screen.getByTestId("chainId"), {
+      target: { value: testNetwork.chainId },
+    });
+    fireEvent.change(screen.getByTestId("symbol"), {
+      target: { value: testNetwork.symbol },
+    });
+    fireEvent.change(screen.getByTestId("explorerUrl"), {
+      target: { value: testNetwork.explorerUrl },
+    });
+    fireEvent.click(screen.getByText("+ Add"));
+    expect(screen.getByText(testNetwork.name)).toBeInTheDocument();
+    fireEvent.click(screen.getByText("+ Add Network"));
 
-  fireEvent.click(screen.getByText("Export Private Key"));
+    expect(screen.getByText("Added a new network"));
+  });
+
+  test("Add the network that just added to local storage", () => {
+    const _chainList = getChainList();
+    expect(_chainList.length).toEqual(2);
+    expect(_chainList[1].name).toEqual(testNetwork.name);
+    expect(_chainList[1].rpc).toEqual(testNetwork.rpc);
+    expect(_chainList[1].chainId).toEqual(testNetwork.chainId);
+    expect(_chainList[1].symbol).toEqual(testNetwork.symbol);
+    expect(_chainList[1].explorerUrl).toEqual(testNetwork.explorerUrl);
+  });
+
+  test("Read the network that just added from local storage", () => {
+    expect(screen.getByText(testNetwork.name)).toBeInTheDocument();
+  });
+
+  test("Update the network that just added", () => {
+    fireEvent.click(screen.getByText(testNetwork.name));
+
+    fireEvent.change(screen.getByTestId("name"), {
+      target: { value: "Test script network for update"},
+    });
+
+    fireEvent.click(screen.getByText("Update"));
+
+    expect(screen.getByText("Updated the network"));
+  });
+
+  test("Update the network that just added from local storage", () => {
+    const _chainList = getChainList();
+    expect(_chainList.length).toEqual(2);
+    expect(_chainList[1].name).toEqual("Test script network for update");
+    expect(_chainList[1].rpc).toEqual(testNetwork.rpc);
+    expect(_chainList[1].chainId).toEqual(testNetwork.chainId);
+    expect(_chainList[1].symbol).toEqual(testNetwork.symbol);
+    expect(_chainList[1].explorerUrl).toEqual(testNetwork.explorerUrl);
+  });
+
+  test("Delete the network that just updated (checked show toast)", () => {
+    fireEvent.click(screen.getByText("Test script network for update"));
+    fireEvent.click(screen.getByText("Remove Network"));
+
+    expect(screen.getByText("Deleted a network"));
+  });
+
+  test("Remove the network that just updated from local storage", () => {
+    const _chainList = getChainList();
+    expect(_chainList.length).toEqual(1);
+  });
 });
 
-test("Detect errors in 'Create Wallet' and 'Export Private Key' when password was manipulated", () => {
-  setPasswordHash("123456"); // simulate that the default password (1234567) was changed to the fake password (123456)
+describe("Simulate wallet generation", () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+  });
 
-  window.prompt = () => {
-    return "123456";
-  };
+  test("Create a new wallet (show toast)", () => {
+    fireEvent.click(screen.getByText("Create Wallet"));
+    expect(screen.getByText("Created a new wallet")).toBeInTheDocument();
+  });
 
-  const _prevPublicKeys = getWallets();
-  const _prevPrivateKeys = getWalletPrivateKeys("1234567");
-  const _prevPrivateKeyStr = window.localStorage.getItem(
-    STORE_WALLET_PRIVATE_KEY
-  );
+  test("Save the new wallet public key to local storage", () => {
+    const _publicKeys = getWallets();
+    expect(_publicKeys.length).toEqual(1);
+  });
 
-  fireEvent.click(screen.getByText(/0x/i));
-  fireEvent.click(screen.getByText("Create Wallet"));
-  expect(
-    screen.getByText("There was an error with your password")
-  ).toBeInTheDocument();
-  const _nextPublicKeys = getWallets();
-  const _nextPrivateKeyStr = window.localStorage.getItem(
-    STORE_WALLET_PRIVATE_KEY
-  );
-  expect(_prevPublicKeys).toEqual(_nextPublicKeys);
-  expect(_prevPrivateKeyStr).toEqual(_nextPrivateKeyStr);
+  test("Save the new wallet private key to local storage by AES encryption", () => {
+    const _privateKeys = getWalletPrivateKeys("123456");
+    expect(_privateKeys.length).toEqual(1);
+  });
 
-  fireEvent.click(screen.getByText("Export Private Key")); // export private key error simulation
-  expect(screen.getByText("Error occurred")).toBeInTheDocument();
+  test("Show 'Export Private Key' button after the new wallet was generated", () => {
+    expect(screen.getByText("Export Private Key")).toBeInTheDocument();
+  });
 
-  setPasswordHash("1234567"); // restore password correctly
+  test("Select an wallet address after the new wallet was generated", () => {
+    expect(screen.getByText(/0x/i)).toBeInTheDocument();
+  });
 
-  window.prompt = () => {
-    return "1234567";
-  };
+  test("Show 'Create Wallet' button when click the selected wallet address", () => {
+    fireEvent.click(screen.getByText(/0x/i));
+    expect(screen.getByText("Create Wallet")).toBeInTheDocument();
+  });
 
-  fireEvent.click(screen.getByText(/0x/i));
-  fireEvent.click(screen.getByText("Create Wallet"));
-  const _lastPublicKeys = getWallets();
-  const _lastPrivateKeys = getWalletPrivateKeys("1234567");
-
-  expect(_prevPublicKeys.length + 1).toEqual(_lastPublicKeys.length);
-  expect(_prevPrivateKeys.length + 1).toEqual(_lastPrivateKeys.length);
-
-  fireEvent.click(screen.getByText("Export Private Key"));
+  test("Export private key", () => {
+    const _privateKeys = getWalletPrivateKeys("123456");
+    expect(_privateKeys.length).toEqual(1);
+    fireEvent.click(screen.getByText("Export Private Key"));
+  });
 });
