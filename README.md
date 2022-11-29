@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Simple Wallet Keeper
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This assignment is to build a small frontend that stores user’s wallets securely.
 
-## Available Scripts
+## Task
 
-In the project directory, you can run:
+The task is to create a simple website that allow users to generate, store and fetch wallets.
 
-### `npm start`
+### User’s requirements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Users would like to click a button to generate a Wallet.
+-   Users would like to see a list of generated wallets.
+-   Users would like to see their private keys by entering their password.
+-   Users would like to see their balance in testnet networks
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Key points
 
-### `npm test`
+-   Wallets should be compatible with EVM networks such as **BNB Chain** or **Ethereum**
+-   You can store the list of wallets in local storage.
+-   You should NOT store user’s passwords.
+-   You should NOT store user’s private keys in plaintext.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### What we would like to see
 
-### `npm run build`
+-   Testing.
+-   Use of React hooks.
+-   State management.
+-   Architecture considerations.
+-   Simplicity.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Considerations
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   We will not focus on design or UI.
+-   You can use Next.js or create-react-app to bootstrap your solution.
+-   You can use Redux
+-   You cannot use a UI kit.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Implementation
 
-### `npm run eject`
+### Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+-   **Create Wallet**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    Users can create a wallet by clicking "Create Wallet" button on the top right of the screen.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-   **List All Generated Wallets**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    Users can see all created wallet in the drop down list and can switch the current wallet.\
+    The list of generated wallets are stored in local storage.
 
-## Learn More
+-   **Export Private Key**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    For created wallets, users can export private key by clicking 'Export Private Key" button on the top right of the screen.\
+    It will requires password to export the private key, and the password is
+    **`123456`** which is hard-coded in the codes.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   **Add, Remove, Update Network**
 
-### Code Splitting
+    Users can add, remove, update network by clicking buttons on the main panel.
+    All BNB and EVM networks are available to manage.\
+    The created networks are stored in local storage.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-   **Show Balance**
 
-### Analyzing the Bundle Size
+    For added networks, users can see the balance of the selected network.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### How to use
 
-### Making a Progressive Web App
+-   `npm start`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    Runs the app in the development mode.\
+    Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Advanced Configuration
+    The page will reload when you make changes.\
+    You may also see any lint errors in the console.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `npm test`
 
-### Deployment
+    Launches the test runner in the interactive watch mode.\
+    See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- `npm run build`
 
-### `npm run build` fails to minify
+    Builds the app for production to the `build` folder.\
+    It correctly bundles React in production mode and optimizes the build for the best performance.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    The build is minified and the filenames include the hashes.\
+    Your app is ready to be deployed!
+
+    See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.

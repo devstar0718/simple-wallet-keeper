@@ -1,6 +1,7 @@
 {
   "name": "binance_test",
   "version": "0.1.0",
+  "author": "alex wang",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

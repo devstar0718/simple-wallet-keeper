@@ -124,6 +124,9 @@
 .App-body .add-network .box-container label {
   color: #fff;
 }
+.App-body .add-network .box-container h1 {
+  color: yellow;
+}
 .App-body .add-network .box-container input[type=text] {
   width: 100%;
   padding: 12px 20px;
