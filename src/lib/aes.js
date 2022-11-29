@@ -5,15 +5,6 @@
  **/
 
 import CryptoJS from "crypto-js";
-import Sha256 from "crypto-js/sha256";
-
-/**
- * @param text
- * @return hash
- **/
-const hash = (text) => {
-  return Sha256(text);
-};
 
 /**
  * @param pass aes encryption key
@@ -54,4 +45,4 @@ const aesDecrypt = (pass, cipher_text) => {
   return bytes;
 };
 
-export { aesEncrypt, aesDecrypt, hash };
+export { aesEncrypt, aesDecrypt };

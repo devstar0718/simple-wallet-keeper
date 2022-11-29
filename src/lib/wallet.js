@@ -15,9 +15,7 @@ import {
   STORE_WALLET_PRIVATE_KEY,
   STORE_CHAIN,
   BINANCE_TEST_NET,
-  STORE_WALLET_PASSWORD,
 } from "../config/constant";
-import { hash } from "./aes";
 
 /**
  * @param providerUrl
@@ -41,20 +39,6 @@ const generateWallet = (web3) => {
   return web3.eth.accounts.create();
 };
 
-/**
- * @return password
- **/
-const getPasswordHash = (pass) => {
-  return localStorage.getItem(STORE_WALLET_PASSWORD);
-};
-
-/**
- * @param pass password
- * @return bool true | false
- **/
-const setPasswordHash = (pass) => {
-  return setLocalStorage(STORE_WALLET_PASSWORD, hash(pass));
-};
 
 /**
  * @return wallet array
@@ -128,8 +112,6 @@ const setChainList = (data) => {
 
 export {
   generateWallet,
-  getPasswordHash,
-  setPasswordHash,
   getWallets,
   setWallets,
   getWalletPrivateKeys,
