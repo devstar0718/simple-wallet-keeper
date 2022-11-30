@@ -5,11 +5,11 @@
  **/
 import { createStore } from "state-pool";
 import {
-  STORE_WALLET_PUBLIC_KEY,
-  STORE_WALLET_PRIVATE_KEY,
-  STORE_CHAIN,
-  WALLET_ADDRESS,
-  SHOW_WALLET_LIST,
+    STORE_WALLET_PUBLIC_KEY,
+    STORE_WALLET_PRIVATE_KEY,
+    STORE_CHAIN,
+    WALLET_ADDRESS,
+    SHOW_WALLET_LIST,
 } from "./constant";
 import { getWallets, getChainList } from "../lib/wallet";
 

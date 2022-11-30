@@ -10,16 +10,15 @@ import { aesEncrypt, aesDecrypt } from "./aes";
  * @return local storage value
  **/
 const readLocalStorageByKey = (key) => {
-  if (!key) return null;
+    if (!key) return null;
 
-  const data = localStorage.getItem(key);
-  let result = null;
+    const data = localStorage.getItem(key);
+    let result = null;
 
-  try {
-    result = JSON.parse(data);
-  } catch (e) {
-  }
-  return result;
+    try {
+        result = JSON.parse(data);
+    } catch (e) {}
+    return result;
 };
 
 /**
@@ -27,10 +26,10 @@ const readLocalStorageByKey = (key) => {
  * @return  true | false
  **/
 const setLocalStorage = (key, str) => {
-  if (!key) return false;
+    if (!key) return false;
 
-  localStorage.setItem(key, str);
-  return true;
+    localStorage.setItem(key, str);
+    return true;
 };
 
 /**
@@ -39,12 +38,12 @@ const setLocalStorage = (key, str) => {
  * @return null | decrypted data
  **/
 const readSecureLocalStorageByKey = (pass, key) => {
-  if (!pass || typeof pass !== "string" || !key || typeof key !== "string") {
-    return null;
-  }
+    if (!pass || typeof pass !== "string" || !key || typeof key !== "string") {
+        return null;
+    }
 
-  const secureText = localStorage.getItem(key);
-  return aesDecrypt(pass, secureText);
+    const secureText = localStorage.getItem(key);
+    return aesDecrypt(pass, secureText);
 };
 
 /**
@@ -53,25 +52,25 @@ const readSecureLocalStorageByKey = (pass, key) => {
  * @return true | false
  **/
 const setSecureLocalStorage = (pass, key, data) => {
-  if (
-    !pass ||
-    typeof pass !== "string" ||
-    !key ||
-    typeof key !== "string" ||
-    !data
-  ) {
-    return false;
-  }
+    if (
+        !pass ||
+        typeof pass !== "string" ||
+        !key ||
+        typeof key !== "string" ||
+        !data
+    ) {
+        return false;
+    }
 
-  const cipherText = aesEncrypt(pass, JSON.stringify(data));
-  localStorage.setItem(key, cipherText);
+    const cipherText = aesEncrypt(pass, JSON.stringify(data));
+    localStorage.setItem(key, cipherText);
 
-  return true;
+    return true;
 };
 
 export {
-  readLocalStorageByKey,
-  setLocalStorage,
-  readSecureLocalStorageByKey,
-  setSecureLocalStorage,
+    readLocalStorageByKey,
+    setLocalStorage,
+    readSecureLocalStorageByKey,
+    setSecureLocalStorage,
 };

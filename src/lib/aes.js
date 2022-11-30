@@ -13,11 +13,16 @@ import CryptoJS from "crypto-js";
  * @return null | encrypted text
  **/
 const aesEncrypt = (pass, text) => {
-  if (!pass || typeof pass !== "string" || !text || typeof text !== "string") {
-    return null;
-  }
+    if (
+        !pass ||
+        typeof pass !== "string" ||
+        !text ||
+        typeof text !== "string"
+    ) {
+        return null;
+    }
 
-  return CryptoJS.AES.encrypt(text, pass).toString();
+    return CryptoJS.AES.encrypt(text, pass).toString();
 };
 
 /**
@@ -27,22 +32,22 @@ const aesEncrypt = (pass, text) => {
  * @return null | decrypted data
  **/
 const aesDecrypt = (pass, cipher_text) => {
-  if (
-    !pass ||
-    typeof pass !== "string" ||
-    !cipher_text ||
-    typeof cipher_text !== "string"
-  ) {
-    return null;
-  }
+    if (
+        !pass ||
+        typeof pass !== "string" ||
+        !cipher_text ||
+        typeof cipher_text !== "string"
+    ) {
+        return null;
+    }
 
-  let bytes = CryptoJS.AES.decrypt(cipher_text, pass);
-  try {
-    bytes = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  } catch (e) {
-    bytes = null;
-  }
-  return bytes;
+    let bytes = CryptoJS.AES.decrypt(cipher_text, pass);
+    try {
+        bytes = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    } catch (e) {
+        bytes = null;
+    }
+    return bytes;
 };
 
 export { aesEncrypt, aesDecrypt };
